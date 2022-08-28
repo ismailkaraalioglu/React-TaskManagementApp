@@ -1,8 +1,14 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { BsPlus } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { addTodoTask } from "../redux/todo/todoSlice";
+import { nanoid } from "nanoid";
+import moment from "moment";
 
 function NewTodoBtn() {
+  const dispatch = useDispatch();
+
   const newTodoItemModal = async () => {
     const { value } = await Swal.fire({
       input: "textarea",
@@ -11,7 +17,14 @@ function NewTodoBtn() {
       showCancelButton: true,
     });
     if (value) {
-      console.log(value);
+      dispatch(
+        addTodoTask({
+          id: nanoid(),
+          text: value,
+          completed: false,
+          time: moment().format("LL"),
+        })
+      );
     }
   };
 
