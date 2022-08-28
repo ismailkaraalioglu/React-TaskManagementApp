@@ -68,8 +68,8 @@ function TodoList({ todo }) {
         <button
           className={classNames({
             "text-xs font-medium ml-auto py-1 px-2 rounded": true,
-            "bg-gray-200": !todo.completed,
-            "bg-green-200 text-green-800": todo.completed,
+            "bg-gray-200 hover:bg-gray-300": !todo.completed,
+            "bg-green-200 text-green-800 hover:bg-green-300": todo.completed,
           })}
           onClick={() => completedTask(todo)}
         >
