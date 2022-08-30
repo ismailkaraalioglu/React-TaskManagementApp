@@ -4,30 +4,22 @@ import { Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import TodoList from "./TodoList";
 
-function Todos() {
-  const todos = useSelector((state) => state.todoapp.todos);
-  const searchInputValue = useSelector(
-    (state) => state.todoapp.searchInputValue
-  );
-
-  const filteredTodoTask = todos.filter((todo) =>
-    todo.text.toLowerCase().includes(searchInputValue)
-  );
+function InProgress() {
+  const inProgressTask = useSelector((state) => state.todoapp.inProgressTask);
 
   return (
-    <Droppable droppableId="todos" key={nanoid()}>
+    <Droppable droppableId="inProgressTask" key={nanoid()}>
       {(provided, snapshot) => (
         <div
-          className="bg-gray-100 w-80 rounded p-5"
+          className="bg-gray-100 w-80 rounded p-5 text-sm font-medium text-gray-600"
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
           <h1 className="text-sm font-medium text-gray-600">
-            <span>TO DO</span>
-            <span className="ml-3 text-xs">{todos.length}</span>
+            <span>IN PROGRESS</span>
           </h1>
           <div className="mt-2">
-            {filteredTodoTask.map((todo, index) => (
+            {inProgressTask.map((todo, index) => (
               <TodoList key={index} todo={todo} index={index} />
             ))}
           </div>
@@ -38,4 +30,4 @@ function Todos() {
   );
 }
 
-export default Todos;
+export default InProgress;

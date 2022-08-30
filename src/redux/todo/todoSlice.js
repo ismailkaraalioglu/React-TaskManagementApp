@@ -4,6 +4,9 @@ export const todoSlice = createSlice({
   name: "todoapp",
   initialState: {
     todos: [],
+    inProgressTask: [],
+    inReviewTask: [],
+    doneTask: [],
     searchInputValue: "",
   },
   reducers: {
@@ -28,6 +31,9 @@ export const todoSlice = createSlice({
     filterSearchValue: (state, action) => {
       state.searchInputValue = action.payload;
     },
+    todoDrag: (state, action) => {
+      state.todos = action.payload;
+    },
   },
 });
 
@@ -37,6 +43,7 @@ export const {
   completedTodoTask,
   editingTodoTask,
   filterSearchValue,
+  todoDrag,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

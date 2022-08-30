@@ -12,8 +12,9 @@ import {
   completedTodoTask,
   editingTodoTask,
 } from "../redux/todo/todoSlice";
+import { Draggable } from "react-beautiful-dnd";
 
-function TodoList({ todo }) {
+function TodoList({ todo, index }) {
   const dispatch = useDispatch();
 
   const editingTodoTaskModal = async (task) => {
@@ -38,45 +39,53 @@ function TodoList({ todo }) {
   };
 
   return (
-    <div
-      className={classNames({
-        "rounded mb-1.5": true,
-        "bg-white text-gray-600": !todo.completed,
-        "bg-green-200 text-green-800": todo.completed,
-      })}
-    >
-      <div className="text-xs font-medium flex items-start justify-between gap-x-3 px-3 py-5">
-        <p className="flex-1">{todo.text}</p>
-        <div className="flex items-center gap-x-1">
-          <button onClick={() => editingTodoTaskModal(todo)}>
-            <AiOutlineEdit size={20} />
-          </button>
-          <button onClick={() => removeTask(todo.id)}>
-            <AiOutlineCloseCircle size={20} />
-          </button>
-        </div>
-      </div>
-
-      <div
-        className={classNames({
-          "border-t p-3 flex items-center gap-x-1": true,
-          "border-green-700": todo.completed,
-        })}
-      >
-        <AiFillClockCircle size={16} />
-        <span className="text-xs">{todo.time}</span>
-        <button
+    <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
+      {(provided, snapshot) => (
+        <div
           className={classNames({
-            "text-xs font-medium ml-auto py-1 px-2 rounded": true,
-            "bg-gray-200 hover:bg-gray-300": !todo.completed,
-            "bg-green-200 text-green-800 hover:bg-green-300": todo.completed,
+            "rounded mb-1.5": true,
+            "bg-white text-gray-600": !todo.completed,
+            "bg-green-200 text-green-800": todo.completed,
           })}
-          onClick={() => completedTask(todo)}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
-          Completed
-        </button>
-      </div>
-    </div>
+          <div className="text-xs font-medium flex items-start justify-between gap-x-3 px-3 py-5">
+            <p className="flex-1">{todo.text}</p>
+            <div className="flex items-center gap-x-1">
+              <button onClick={() => editingTodoTaskModal(todo)}>
+                <AiOutlineEdit size={20} />
+              </button>
+              <button onClick={() => removeTask(todo.id)}>
+                <AiOutlineCloseCircle size={20} />
+              </button>
+            </div>
+          </div>
+
+          <div
+            className={classNames({
+              "border-t p-3 flex items-center gap-x-1": true,
+              "border-green-700": todo.completed,
+            })}
+          >
+            <AiFillClockCircle size={16} />
+            <span className="text-xs">{todo.time}</span>
+            <button
+              className={classNames({
+                "text-xs font-medium ml-auto py-1 px-2 rounded": true,
+                "bg-gray-200 hover:bg-gray-300": !todo.completed,
+                "bg-green-200 text-green-800 hover:bg-green-300":
+                  todo.completed,
+              })}
+              onClick={() => completedTask(todo)}
+            >
+              Completed
+            </button>
+          </div>
+        </div>
+      )}
+    </Draggable>
   );
 }
 
