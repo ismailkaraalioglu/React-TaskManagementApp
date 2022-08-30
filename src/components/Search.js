@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { filteredTodoTask } from "../redux/todo/todoSlice";
+import { filterSearchValue } from "../redux/todo/todoSlice";
 
 function Search() {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (inputValue === "") {
-      return;
-    }
-    dispatch(filteredTodoTask(inputValue));
+    dispatch(filterSearchValue(inputValue));
   }, [inputValue, dispatch]);
 
   return (

@@ -4,7 +4,7 @@ export const todoSlice = createSlice({
   name: "todoapp",
   initialState: {
     todos: [],
-    filteredTodo: [],
+    searchInputValue: "",
   },
   reducers: {
     addTodoTask: (state, action) => {
@@ -25,16 +25,8 @@ export const todoSlice = createSlice({
       const index = state.todos.findIndex((todo) => todo.id === task.id);
       state.todos[index].text = value;
     },
-    filteredTodoTask: (state, action) => {
-      const filterTodoTask = state.todos.filter((todo) => {
-        return Object.keys(todo).some((key) =>
-          todo[key]
-            .toString()
-            .toLowerCase()
-            .includes(action.payload.toLowerCase())
-        );
-      });
-      state.filteredTodo = filterTodoTask;
+    filterSearchValue: (state, action) => {
+      state.searchInputValue = action.payload;
     },
   },
 });
@@ -44,7 +36,7 @@ export const {
   removeTodoTask,
   completedTodoTask,
   editingTodoTask,
-  filteredTodoTask,
+  filterSearchValue,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
