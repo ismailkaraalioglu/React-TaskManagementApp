@@ -29,7 +29,7 @@ function NewTodoBtn() {
   };
 
   return (
-    <div className="text-gray-500 border border-gray-400 rounded">
+    <div className="bg-blue-600 rounded-md text-gray-100 hover:bg-blue-700">
       <button
         className="flex items-center justify-center gap-x-2 px-5 py-2"
         onClick={newTodoItemModal}

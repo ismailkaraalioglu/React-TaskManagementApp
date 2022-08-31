@@ -6,7 +6,7 @@ import {
   AiFillClockCircle,
   AiOutlineEdit,
 } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   removeTodoTask,
   completedTodoTask,
@@ -15,6 +15,7 @@ import {
 import { Draggable } from "react-beautiful-dnd";
 
 function TodoList({ todo, index }) {
+  const getColumsId = useSelector((state) => state.todoapp.getColumsId);
   const dispatch = useDispatch();
 
   const editingTodoTaskModal = async (task) => {
@@ -26,33 +27,36 @@ function TodoList({ todo, index }) {
       showCancelButton: true,
     });
     if (value) {
-      dispatch(editingTodoTask({ value, task }));
+      dispatch(editingTodoTask({ value, task, getColumsId }));
     }
   };
 
   const removeTask = (id) => {
-    dispatch(removeTodoTask(id));
+    dispatch(removeTodoTask({ id, getColumsId }));
   };
 
   const completedTask = (task) => {
-    dispatch(completedTodoTask(task));
+    dispatch(completedTodoTask({ task, getColumsId }));
   };
 
   return (
     <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
       {(provided, snapshot) => (
         <div
-          className={classNames({
-            "rounded mb-1.5": true,
-            "bg-white text-gray-600": !todo.completed,
-            "bg-green-200 text-green-800": todo.completed,
-          })}
+          className="rounded mb-1.5 text-gray-600 drop-shadow-lg bg-white"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           <div className="text-xs font-medium flex items-start justify-between gap-x-3 px-3 py-5">
-            <p className="flex-1">{todo.text}</p>
+            <p
+              className={classNames({
+                "flex-1": true,
+                "line-through": todo.completed,
+              })}
+            >
+              {todo.text}
+            </p>
             <div className="flex items-center gap-x-1">
               <button onClick={() => editingTodoTaskModal(todo)}>
                 <AiOutlineEdit size={20} />
@@ -63,12 +67,7 @@ function TodoList({ todo, index }) {
             </div>
           </div>
 
-          <div
-            className={classNames({
-              "border-t p-3 flex items-center gap-x-1": true,
-              "border-green-700": todo.completed,
-            })}
-          >
+          <div className="border-t p-3 flex items-center gap-x-1">
             <AiFillClockCircle size={16} />
             <span className="text-xs">{todo.time}</span>
             <button
