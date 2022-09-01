@@ -14,7 +14,7 @@ function Main() {
   };
 
   return (
-    <main className="h-[609px] flex justify-center gap-x-9">
+    <main className="h-[520px] flex justify-center gap-x-9 w-11/12 mx-auto">
       <DragDropContext onDragEnd={onDragEnd}>
         <Todos />
         <InProgress />

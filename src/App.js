@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HeaderBottom from "./components/HeaderBottom";
 import Main from "./components/Main";
@@ -8,6 +9,7 @@ function App() {
       <Header />
       <HeaderBottom />
       <Main />
+      <Footer />
     </>
   );
 }

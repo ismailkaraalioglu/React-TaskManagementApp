@@ -12,8 +12,8 @@ function NewTodoBtn() {
   const newTodoItemModal = async () => {
     const { value } = await Swal.fire({
       input: "textarea",
-      inputLabel: "New Todo",
-      inputPlaceholder: "Type your message here...",
+      inputLabel: "New Task",
+      inputPlaceholder: "Write a new task",
       showCancelButton: true,
     });
     if (value) {
@@ -36,7 +36,7 @@ function NewTodoBtn() {
         onClick={newTodoItemModal}
       >
         <BsPlus size={22} />
-        New Todo
+        New Task
       </button>
     </div>
   );

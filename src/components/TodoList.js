@@ -21,7 +21,7 @@ function TodoList({ todo, index }) {
     const { value } = await Swal.fire({
       input: "textarea",
       inputLabel: "Editing Todo Task",
-      inputPlaceholder: "Type your message here...",
+      inputPlaceholder: "Edit to do task...",
       inputValue: task.text,
       showCancelButton: true,
     });
@@ -51,7 +51,7 @@ function TodoList({ todo, index }) {
             <p
               className={classNames({
                 "flex-1": true,
-                "line-through": todo.completed,
+                "line-through text-green-800 decoration-green-800": todo.completed,
               })}
             >
               {todo.text}
