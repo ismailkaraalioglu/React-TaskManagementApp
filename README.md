@@ -4,7 +4,7 @@
 
 ## :sparkles: Live Demo
 
-[https://ismailkaraalioglu-taskmanagementapp.netlify.app/>](https://ismailkaraalioglu-taskmanagementapp.netlify.app/)
+[https://ismailkaraalioglu-taskmanagementapp.netlify.app](https://ismailkaraalioglu-taskmanagementapp.netlify.app)
 
 ## :computer: Setup
 
