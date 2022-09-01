@@ -8,28 +8,26 @@ export const todoSlice = createSlice({
     inReviewTask: [],
     doneTask: [],
     searchInputValue: "",
-    getColumsId: "todos",
   },
   reducers: {
     addTodoTask: (state, action) => {
       state.todos = [action.payload, ...state.todos];
     },
     removeTodoTask: (state, action) => {
-      const { id, getColumsId } = action.payload;
-      const index = state[getColumsId].findIndex((todo) => todo.id === id);
-      state[getColumsId].splice(index, 1);
+      const { id, colums } = action.payload;
+      const index = state[colums].findIndex((todo) => todo.id === id);
+      state[colums].splice(index, 1);
     },
     completedTodoTask: (state, action) => {
-      console.log(action.payload);
-      const { task, getColumsId } = action.payload;
-      const { id, completed } = task;
-      const index = state[getColumsId].findIndex((todo) => todo.id === id);
-      state[getColumsId][index].completed = !completed;
+      const { id, completed, colums } = action.payload;
+      const index = state[colums].findIndex((todo) => todo.id === id);
+      state[colums][index].completed = !completed;
     },
     editingTodoTask: (state, action) => {
-      const { value, task, getColumsId } = action.payload;
-      const index = state[getColumsId].findIndex((todo) => todo.id === task.id);
-      state[getColumsId][index].text = value;
+      const { value, task } = action.payload;
+      const { colums } = task;
+      const index = state[colums].findIndex((todo) => todo.id === task.id);
+      state[colums][index].text = value;
     },
     filterSearchValue: (state, action) => {
       state.searchInputValue = action.payload;
@@ -39,7 +37,6 @@ export const todoSlice = createSlice({
       if (!result.destination) return;
       const { source, destination } = result;
       if (source.droppableId !== destination.droppableId) {
-        state.getColumsId = destination.droppableId;
         let sourceColumn = state[source.droppableId];
         let destColumn = state[destination.droppableId];
         const sourceItems = [...sourceColumn];
@@ -48,6 +45,7 @@ export const todoSlice = createSlice({
         destItems.splice(destination.index, 0, removed);
         state[source.droppableId] = sourceItems;
         state[destination.droppableId] = destItems;
+        state[destination.droppableId][0].colums = destination.droppableId;
       } else {
         const column = state[source.droppableId];
         const copiedItems = [...column];

@@ -23,6 +23,7 @@ function NewTodoBtn() {
           text: value,
           completed: false,
           time: moment().format("LL"),
+          colums: "todos",
         })
       );
     }

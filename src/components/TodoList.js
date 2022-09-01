@@ -6,7 +6,7 @@ import {
   AiFillClockCircle,
   AiOutlineEdit,
 } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   removeTodoTask,
   completedTodoTask,
@@ -15,7 +15,6 @@ import {
 import { Draggable } from "react-beautiful-dnd";
 
 function TodoList({ todo, index }) {
-  const getColumsId = useSelector((state) => state.todoapp.getColumsId);
   const dispatch = useDispatch();
 
   const editingTodoTaskModal = async (task) => {
@@ -27,16 +26,16 @@ function TodoList({ todo, index }) {
       showCancelButton: true,
     });
     if (value) {
-      dispatch(editingTodoTask({ value, task, getColumsId }));
+      dispatch(editingTodoTask({ value, task }));
     }
   };
 
-  const removeTask = (id) => {
-    dispatch(removeTodoTask({ id, getColumsId }));
+  const removeTask = (todo) => {
+    dispatch(removeTodoTask(todo));
   };
 
   const completedTask = (task) => {
-    dispatch(completedTodoTask({ task, getColumsId }));
+    dispatch(completedTodoTask(task));
   };
 
   return (
@@ -61,7 +60,7 @@ function TodoList({ todo, index }) {
               <button onClick={() => editingTodoTaskModal(todo)}>
                 <AiOutlineEdit size={20} />
               </button>
-              <button onClick={() => removeTask(todo.id)}>
+              <button onClick={() => removeTask(todo)}>
                 <AiOutlineCloseCircle size={20} />
               </button>
             </div>
